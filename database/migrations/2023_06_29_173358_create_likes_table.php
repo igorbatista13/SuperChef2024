@@ -25,6 +25,7 @@ return new class extends Migration
           $table->string('sessao')->nullable();
           $table->string('nome')->nullable();
           $table->string('cpf')->nullable();
+          $table->boolean('Autorizacao_cpf')->nullable();
 
 
             $table->timestamps();

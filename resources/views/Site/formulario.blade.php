@@ -237,7 +237,15 @@
 
                 <center>
                     <div class="checkbox-group">
-
+                        <div>
+                            <input
+                              class="form"
+                              type="checkbox"
+                              id=""
+                              name="checkbox"
+                              value="1" required />
+                            <label for="subscribeNews"> <strong> Autorizo o uso dos meus dados para a efetuar a inscrição </strong> </label>
+                          </div>
                         <div class="form-group col-md-12">
                             <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
                         </div>

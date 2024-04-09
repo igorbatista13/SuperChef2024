@@ -122,7 +122,7 @@
 
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Inscrições  <span></span></h5>
+                                    <h5 class="card-title">Inscrições <span></span></h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -130,7 +130,7 @@
                                             <i class="text-warning bi bi-file-text"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6 class="text-warning">{{$insc_nao_avaliados }}</h6>
+                                            <h6 class="text-warning">{{ $insc_nao_avaliados }}</h6>
                                             <span class="text-warning small pt-1 fw-bold">Não Avaliadas</span>
 
                                         </div>
@@ -146,7 +146,7 @@
 
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Inscrições  <span></span></h5>
+                                    <h5 class="card-title">Inscrições <span></span></h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -154,7 +154,7 @@
                                             <i class="text-danger bi bi-file-text"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6 class="text-danger">{{$insc_desclassificados }}</h6>
+                                            <h6 class="text-danger">{{ $insc_desclassificados }}</h6>
                                             <span class="text-danger small pt-1 fw-bold">Desclassificadas</span>
 
                                         </div>
@@ -187,35 +187,13 @@
                                 </div>
 
                             </div>
-                        </div><!-- End Revenue Card -->
-                        {{-- <div class="col-xxl-3 col-md-3">
-                            <div class="card info-card revenue-card">
+                        </div>
 
 
 
-                                <div class="card-body">
-                                    <h5 class="card-title">Usuários <span></span></h5>
 
-                                    <div class="d-flex align-items-center">
-                                        <div
-                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class=" text-success bi bi-people"></i>
-                                        </div>
-                                        <div class="ps-3">
-                                            <h6>{{ $produtos }}</h6>
-                                            <span class="text-success small pt-1 fw-bold"></span>
 
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div> --}}
-                        <!-- End Revenue Card -->
-
-                        
-
-            </div>
+                    </div>
         </section>
     </main>
 @endsection

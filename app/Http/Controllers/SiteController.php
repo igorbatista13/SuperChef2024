@@ -22,16 +22,15 @@ class SiteController extends Controller
     public function buscarProdutos(Request $request)
     {
         $termoAluno = $request->termoAluno;
-        $alunos = Produto::where('Nome', 'like', '%' . $termoAluno . '%')->get();
+        $alunos = Produto::whereRaw('LOWER(Nome) LIKE ?', ['%' . strtolower($termoAluno) . '%'])->get();
         return response()->json($alunos);
     }
 
 
-
     public function vote(Request $request, Recibo $recibo)
     {
-        // Define a data limite para votação (18 de setembro de 2023 às 23:59h)
-        $limitDate = '2024-06-17 23:59:59';
+        // Define a data limite para votação (Verificar a data)
+        $limitDate = '2024-09-18 23:59:59';
         
         // Obtém a data e hora atual
         $currentDateTime = now();
@@ -45,9 +44,12 @@ class SiteController extends Controller
     
             $sessionId = Session::getId();
     
+            // Hash MD5 do CPF
+            $hashedCpf = md5($request->cpf);
+    
             // Verifica se o CPF já foi utilizado para votar nesta receita
             $cpfExists = Like::where('recibo_id', $recibo->id)
-                ->where('cpf', $request->cpf)
+                ->where('cpf', $hashedCpf)
                 ->exists();
     
             if ($cpfExists) {
@@ -60,7 +62,7 @@ class SiteController extends Controller
     
             $recibo->likes()->create([
                 'sessao' => $sessionId,
-                'cpf' => $request->cpf,
+                'cpf' => $hashedCpf, // Salva o CPF criptografado com MD5
                 'nome' => $request->nome,
             ]);
     
@@ -71,7 +73,6 @@ class SiteController extends Controller
         }
     }
     
-
 
 
     public function index(Request $request) {

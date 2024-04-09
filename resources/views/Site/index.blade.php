@@ -114,7 +114,6 @@
                                                 </div>
                                             </div>
 
-                                            
 
                                             <div class="form-group">
                                                 <label for="nome"> <b> Nome completo: </b> </label>
@@ -127,6 +126,16 @@
                                                     required>
                                             </div>
                                             <div class="like-content">
+
+                                                <div>
+                                                    <input
+                                                      class="form"
+                                                      type="checkbox"
+                                                      id=""
+                                                      name="Autorizacao_cpf"
+                                                      value="1" required />
+                                                    <label for="subscribeNews"> <strong> Autorizo o uso do meu CPF para a contabilização deste voto.</strong> </label>
+                                                  </div>
 
                                                 <button type="submit" class="btn-like like-review">Votar</button>
                                             </div>
@@ -494,15 +503,27 @@
         }
 
         $(document).ready(function() {
-            $('#cpf').on('blur', function() {
-                var cpf = $(this).val();
-                if (!validarCPF(cpf)) {
-                    alert('Favor corrigir o seu CPF.');
-                    $(this).val('');
-                    $(this).focus();
-                }
-            });
+        $('#cpf').on('blur', function() {
+            // Evento blur para validar CPF
+            var cpf = $(this).val();
+            if (!validarCPF(cpf)) {
+                alert('Favor corrigir o seu CPF.');
+                $(this).val('');
+                $(this).focus();
+            }
         });
+
+        $('#form-votacao').on('submit', function() {
+            // Evento submit para validar CPF antes de enviar o formulário
+            var cpf = $('#cpf').val();
+            if (!validarCPF(cpf)) {
+                alert('Favor corrigir o seu CPF.');
+                $('#cpf').val('');
+                $('#cpf').focus();
+                return false; // Impede o envio do formulário
+            }
+        });
+    });
     </script>
 
 
