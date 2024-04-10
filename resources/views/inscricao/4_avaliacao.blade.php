@@ -147,7 +147,7 @@
                                         <h5 class="card-title">Não
                                             utilizar
                                             alimentos
-                                            <b> processados </b>
+                                            <b> PROCESSADOS </b>
                                         </h5>
                                         <div class="d-flex align-items-center">
                                             <div
@@ -177,7 +177,7 @@
                                         <h5 class="card-title">Não
                                             utilizar
                                             alimentos
-                                            <b> ultraprocessados </b>
+                                            <b> ULTRAPROCESSADOS </b>
                                         </h5>
                                         <div class="d-flex align-items-center">
                                             <div
@@ -208,7 +208,7 @@
                                 <div class="card info-card customers-card">
                                     <div class="card-body">
                                         <h5 class="card-title">
-                                            Alimentos da Agricultura Familiar
+                                            Alimentos da <b> Agricultura Familiar </b>
                                             <i class="text-danger"> Até 3 itens </i>
 
                                         </h5>
@@ -236,7 +236,7 @@
                                 <div class="card info-card customers-card">
                                     <div class="card-body">
                                         <h5 class="card-title">
-                                            Alimentos da Agricultura Familiar
+                                            Alimentos da <b> Agricultura Familiar </b>
                                             <i class="text-danger"> Acima de 3 itens
 
                                         </h5>
@@ -271,13 +271,13 @@
                                 <div class="card info-card customers-card">
                                     <div class="card-body">
                                         <h5 class="card-title">
-                                            Criatividade (inovação e originalidade)
+                                            Criatividade <b>(inovação e originalidade) </b>
                                         </h5>
                                         <div class="d-flex align-items-center">
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                 <i class="text-danger bi bi-file-text">
-                                                    máxima:
+                                                   Pontuação máxima:
                                                     2
                                                     Pontos
                                                 </i>
@@ -305,7 +305,7 @@
                                 <div class="card info-card customers-card">
                                     <div class="card-body">
                                         <h5 class="card-title">
-                                            Viabilidade no PNAE
+                                            Viabilidade no <b>PNAE</b>
                                         </h5>
                                         <div class="d-flex align-items-center">
                                             <div

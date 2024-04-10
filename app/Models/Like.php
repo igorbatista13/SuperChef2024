@@ -10,7 +10,7 @@ class Like extends Model
     use HasFactory;
     protected $guarded = [];
 
-    protected $fillable = ['recibo_id', 'sessao','nome','cpf'];
+    protected $fillable = ['recibo_id', 'sessao','nome','cpf', 'Autorizacao_cpf'];
 
     protected $table = 'likes';
 

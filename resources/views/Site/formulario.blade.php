@@ -37,8 +37,7 @@
         height: 45vh;
         background: linear-gradient(rgba(240, 240, 240, 0),
                 rgba(255, 255, 255, 0.055)),
-            url("{{ asset('/images/logo_seduc_chef_grande.jpg') }}");
-        background-size: cover;
+            url("{{ asset('/images/Superchef_b.png') }}");
         background-position: center;
         background-repeat: no-repeat;
         margin-top: 5px;
@@ -242,7 +241,7 @@
                               class="form"
                               type="checkbox"
                               id=""
-                              name="checkbox"
+                              name="Autorizacao"
                               value="1" required />
                             <label for="subscribeNews"> <strong> Autorizo o uso dos meus dados para a efetuar a inscrição </strong> </label>
                           </div>

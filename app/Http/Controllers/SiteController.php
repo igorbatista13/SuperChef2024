@@ -62,8 +62,9 @@ class SiteController extends Controller
     
             $recibo->likes()->create([
                 'sessao' => $sessionId,
-                'cpf' => $hashedCpf, // Salva o CPF criptografado com MD5
                 'nome' => $request->nome,
+                'cpf' => $hashedCpf, // Salva o CPF criptografado com MD5
+                'Autorizacao_cpf' => $request->Autorizacao_cpf,
             ]);
     
             return redirect()->back()->with('success', 'Voto registrado com sucesso.');

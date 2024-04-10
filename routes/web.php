@@ -22,8 +22,11 @@ use App\Http\Controllers\{
   CatingredientesController,
   InsumoController,
   ReciboController,
-  PainelGerencialController
+  PainelGerencialController,
+  DocumentosController,
+  PopupController
 };
+use App\Models\Popup;
 
 //  Route::get('/escola/teste',      [PessoaController::class, 'index']);
 //  Route::get('/base/base',      [PainelGerencialController::class, 'dashboard']);
@@ -78,6 +81,8 @@ Route::resource('cat_ingrediente',           Categoria_ingredientesController::c
 Route::resource('catingrediente',            CatingredientesController::class);
 Route::resource('insumo',                    InsumoController::class);
 Route::resource('inscricao',                 ReciboController::class);
+Route::resource('documentos',                DocumentosController::class);
+Route::resource('popup',                     PopupController::class);
 
 ////// PAINEL GERENCIAL (DASHBOARD)
 Route::get('/painel', [PainelGerencialController::class, 'dashboard']);

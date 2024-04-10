@@ -54,6 +54,7 @@ return new class extends Migration
             $table->decimal('nota_dre5',10,2)->nullable();
             $table->boolean('desclassificar')->nullable();
             $table->boolean('disp_site')->nullable();
+            $table->boolean('Autorizacao')->nullable();
         $table->timestamps();
 
     });

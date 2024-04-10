@@ -14,35 +14,7 @@
   <div class="card">
       
     <div class="card-body">
-        @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-dismissible">
-<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-<strong>Mensagem:</strong> {{ $message }}
-</div>
-</div>
-    
-        @elseif ($message = Session::get('edit'))
-        <div class="alert alert-warning alert-dismissible">
-<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-<strong>Mensagem:</strong> {{ $message }}
-</div>
-</div>
 
-        @elseif ($message = Session::get('delete'))
-        <div class="alert alert-danger alert-dismissible">
-<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-<strong>Mensagem:</strong> {{ $message }}
-</div>
-</div>
-        @endif
-
-
-        <div>
-@if (session()->has('message'))
-    <div class="alert alert-success">
-        {{ session('message') }}
-    </div>
-@endif
         
   <section class="section">
     <div class="row">
@@ -72,37 +44,7 @@
               <tbody>
 
                 <div class="container">
-                  {{-- @foreach($recibo as $recibos)
-                      <div class="recibo">
-                          <div class="cpf-toggle" data-cpf="{{ $recibos->cpf }}">
-                              CPF: {{ $recibos->cpf }}
-                              <i class="fa fa-caret-down"></i>
-                          </div>
-                          <div class="recibo-details" style="display: none;">
-                              <!-- Aqui você coloca os detalhes do recibo -->
-                              Data: {{ $recibos->created_at }}
-                              <!-- Outros detalhes -->
-                          </div>
-                      </div>
-                  @endforeach
-
-                  <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        var toggles = document.querySelectorAll('.cpf-toggle');
-                        toggles.forEach(function(toggle) {
-                            toggle.addEventListener('click', function() {
-                                var cpf = toggle.dataset.cpf;
-                                var details = document.querySelectorAll('.recibo-details');
-            
-                                details.forEach(function(detail) {
-                                    if (detail.previousElementSibling.dataset.cpf === cpf) {
-                                        detail.style.display = (detail.style.display === 'none' ? 'block' : 'none');
-                                    }
-                                });
-                            });
-                        });
-                    });
-                </script> --}}
+              
               </div>
 
                 @foreach ($recibo as $key => $recibos)
@@ -130,19 +72,15 @@
                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16"> <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/> </svg>
                  Avaliar</a> </td>
         
-{{-- Etapa1 --}}
 <?php $totalnotasseduc = $recibos->nota_seduc1 + $recibos->nota_seduc2 + $recibos->nota_seduc3 + $recibos->nota_seduc4 + $recibos->nota_seduc5; ?>
-{{-- ETAPA 2 --}}
 <?php $totalnotasseduc2 = $recibos->nota_drenutricao1 + $recibos->nota_drenutricao2 + $recibos->nota_drenutricao3 + $recibos->nota_drenutricao4 + $recibos->nota_drenutricao5; ?>
-{{-- ETAPA 3 --}}
-<?php $totalnotasdre = $recibos->nota_dre1 + $recibos->nota_dre2 + $recibos->nota_dre3 + $recibos->nota_dre4 + $recibos->nota_dre5; ?>
 {{-- TOTAL --}}
-{{-- <?php $total = $totalnotasseduc2 + $totalnotasdre ?> --}}
- <?php $total = $totalnotasseduc ?> 
 
-@if ($totalnotasseduc  >= 10)
+   <?php $total = $totalnotasseduc + $totalnotasseduc2 ?> 
+
+@if ($total  >= 10)
 <td>  <center> <h2><span class="badge bg-success">  {{$total ?? 'Nota não informada'}}</span></h2></td>
-  @elseif ( $totalnotasseduc  < 10)
+  @elseif ( $total  < 10)
   <td>  <center> <h2><span class="badge bg-danger">  {{$total ?? 'Nota não informada'}}</span></h2></td>
   @endif
 <td>

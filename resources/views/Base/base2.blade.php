@@ -190,7 +190,7 @@
             height: 25vh;
             background: linear-gradient(rgba(240, 240, 240, 0.144),
                     rgba(255, 255, 255, 0.336)),
-                url("https://i.postimg.cc/wT3TQS3V/header-image2.jpg");
+                url("https://i.postimg.scc/wT3TQS3V/header-image2.jpg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -811,7 +811,7 @@
         <section class="showcase-area" id="showcase">
             <div class="showcase-container">
                 <h1 class="main-title" id="home"> <a href="/Site" class="app-link"> <img
-                            src="{{ asset('/images/logo_seduc_chef.jpg') }}" width="150px" class=""> </a>
+                            src="{{ asset('/images/Superchef.png') }}" width="150px" class=""> </a>
 
                 </h1>
                 <h2> Competição de Merendeiras (os) da rede Estadual de MT - Melhores receitas </h3>
