@@ -19,7 +19,10 @@ use Illuminate\Support\Facades\Session;
 class SiteController extends Controller
 {
 
+public function documentos() {
 
+    return view('Site.documentos.index');
+}
     public function vote(Request $request, Recibo $recibo)
     {
         $sessionId = Session::getId();

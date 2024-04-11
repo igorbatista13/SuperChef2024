@@ -800,22 +800,17 @@
 </head>
 
 <body>
-    <!-- partial:index.partial.html -->
-    <!-- partial:index.partial.html -->
-
-
     <div class="app-container">
-
-
-
         <section class="showcase-area" id="showcase">
             <div class="showcase-container">
-                <h1 class="main-title" id="home"> <a href="/Site" class="app-link"> <img
-                            src="{{ asset('/images/Superchef.png') }}" width="150px" class=""> </a>
-
+                <h1 class="main-title" id="home">
+                    <a href="/Site" class="app-link">
+                        <img src="{{ asset('/images/Superchef.png') }}" width="200px" class="">
+                    </a>
                 </h1>
+
                 <h2> Competição de Merendeiras (os) da rede Estadual de MT - Melhores receitas </h3>
-                </p>
+                    
                     {{-- <a href="#food-menu" class="btn btn-primary">Menu</a> --}}
             </div>
         </section>
@@ -850,7 +845,7 @@
                             {{-- Alterar ícone --}}
                         </button>
 
-                       <input type="text" name="search" placeholder="Procurar receita" class="search-input"> 
+                        <input type="text" name="search" placeholder="Procurar receita" class="search-input">
                         <button class="search-btn">PROCURAR </button>
                     </div>
 
@@ -860,15 +855,15 @@
 
 
                     <div class="contact-actions-wrapper">
-                        <a href="https://www3.seduc.mt.gov.br/documents/8125245/44912036/Regulamento+-+Competi%C3%A7%C3%A3o+Super+Chef+da+Educa%C3%A7%C3%A3o+-+Melhores+Receitas+-+Rede+Estadual+de+MT.pdf" class="button"> <svg width="24px" height="24px" viewBox="0 0 52 52"
-                                xmlns="http://www.w3.org/2000/svg" fill="#f5f5f5" stroke="#f5f5f5">
+                        <a href="{{ asset('/Site/documentos/') }}" class="button"> <svg width="24px" height="24px"
+                                viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" fill="#f5f5f5" stroke="#f5f5f5">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"> </g>
                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                 <g id="SVGRepo_iconCarrier">
-                                    <rect fill="none" height="4.8" rx="1.6" width="27.2" x="12.4"
-                                        y="26"> </rect>
-                                    <rect fill="none" height="4.8" rx="1.6" width="24" x="12.4"
-                                        y="35.6"> </rect>
+                                    <rect fill="none" height="4.8" rx="1.6" width="27.2" x="12.4" y="26">
+                                    </rect>
+                                    <rect fill="none" height="4.8" rx="1.6" width="24" x="12.4" y="35.6">
+                                    </rect>
                                     <g>
                                         <path
                                             d="m36.4 14.8h8.48a1.09 1.09 0 0 0 1.12-1.12 1 1 0 0 0 -.32-.8l-10.56-10.56a1 1 0 0 0 -.8-.32 1.09 1.09 0 0 0 -1.12 1.12v8.48a3.21 3.21 0 0 0 3.2 3.2z">
@@ -878,23 +873,19 @@
                                         </path>
                                     </g>
                                 </g>
-                            </svg>&nbsp; REGULAMENTO </a>
-                        <div class="contact-actions socials">
+                            </svg>&nbsp; DOCUMENTOS </a>
 
-                            {{-- <a href="#" class="contact-link facebook">
-           <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-         </a> --}}
-
+                        {{-- <div class="contact-actions socials">
                             <a href="#" class="button pulse">
                                 <svg width="24px" height="24px" viewBox="0 0 52 52"
                                     xmlns="http://www.w3.org/2000/svg" fill="#f5f5f5" stroke="#f5f5f5">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"> </g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier">
-                                        <rect fill="none" height="4.8" rx="1.6" width="27.2"
-                                            x="12.4" y="26"> </rect>
-                                        <rect fill="none" height="4.8" rx="1.6" width="24"
-                                            x="12.4" y="35.6"> </rect>
+                                        <rect fill="none" height="4.8" rx="1.6" width="27.2" x="12.4"
+                                            y="26"> </rect>
+                                        <rect fill="none" height="4.8" rx="1.6" width="24" x="12.4"
+                                            y="35.6"> </rect>
                                         <g>
                                             <path
                                                 d="m36.4 14.8h8.48a1.09 1.09 0 0 0 1.12-1.12 1 1 0 0 0 -.32-.8l-10.56-10.56a1 1 0 0 0 -.8-.32 1.09 1.09 0 0 0 -1.12 1.12v8.48a3.21 3.21 0 0 0 3.2 3.2z">
@@ -906,32 +897,34 @@
                                     </g>
                                 </svg>&nbsp; Formulário de Inscrição
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
+                @include('Site/DRE/menu')
 
             </section>
 
         </form>
 
         @if ($search)
-        <section class="app-actions">
-          <div class="contact-actions socials">
-            <div class="contact-actions socials">
-              <h2>Resultado da busca:<big> <b> <u> {{ $search }} </b> </u></big></h2>
-            </div>
+            <section class="app-actions">
+                <div class="contact-actions socials">
+                    <div class="contact-actions socials">
+                        <h2>Resultado da busca:<big> <b> <u> {{ $search }} </b> </u></big></h2>
+                    </div>
 
-            <div class="contact-actions socials">
-              <a href="{{ asset('/Site') }}">
-                    <button class="search-btn">Limpar pesquisa</button> </a>
-            </div>
+                    <div class="contact-actions socials">
+                        <a href="{{ asset('/Site') }}">
+                            <button class="search-btn">Limpar pesquisa</button> </a>
+                    </div>
 
-          </div></section>
+                </div>
+            </section>
         @endif
 
 
-        
+
         @yield('content')
 
 

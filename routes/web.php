@@ -140,9 +140,28 @@ Route::get('/site/voto/{id}',             [SiteController::class, 'voto']);
 Route::get('/site/retiravoto/{id}',       [SiteController::class, 'retiravoto']);
 Route::get('/Site/formulario',            [SiteController::class, 'formulario']);
 Route::get('/Site/formulario', [SiteController::class, 'formulario'])->name('Site.formulario');
+Route::get('/Site/formulario', [SiteController::class, 'formulario'])->name('Site.formulario');
+Route::get('/Site/documentos', [SiteController::class, 'documentos'])->name('Site.documentos');
 Route::post('/Site/formulario', [SiteController::class, 'store_formulario'])->name('Site.store_formulario');
 Route::get('site',                        [SiteController::class, 'index'])->name('recibos.index');
 Route::post('site/{recibo}/vote',         [SiteController::class, 'vote'])->name('site.vote');
+
+
+
+Route::get('/Site/dre/drealtafloresta',    [SiteController::class, 'drealtafloresta']);
+Route::get('/Site/dre/drebarradogarcas',    [SiteController::class, 'drebarradogarcas']);
+Route::get('/Site/dre/drecaceres',           [SiteController::class, 'drecaceres']);
+Route::get('/Site/dre/dreconfresa',    [SiteController::class, 'dreconfresa']);
+Route::get('/Site/dre/drecuiaba',    [SiteController::class, 'drecuiaba']);
+Route::get('/Site/dre/drevarzeagrande',    [SiteController::class, 'drevarzeagrande']);
+Route::get('/Site/dre/drediamantino',    [SiteController::class, 'drediamantino']);
+Route::get('/Site/dre/drejuina',    [SiteController::class, 'drejuina']);
+Route::get('/Site/dre/drematupa',    [SiteController::class, 'drematupa']);
+Route::get('/Site/dre/dreponteselacerda',    [SiteController::class, 'dreponteselacerda']);
+Route::get('/Site/dre/dreprimaveradoleste',    [SiteController::class, 'dreprimaveradoleste']);
+Route::get('/Site/dre/drerondonopolis',    [SiteController::class, 'drerondonopolis']);
+Route::get('/Site/dre/dresinop',    [SiteController::class, 'dresinop']);
+Route::get('/Site/dre/dretangaradaserra',    [SiteController::class, 'dretangaradaserra']);
 
 
 
