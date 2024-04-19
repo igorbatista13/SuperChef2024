@@ -36,6 +36,7 @@ Route::get('/inscricao/semnotas',        [ReciboController::class, 'semnotas']);
 Route::get('/inscricao/semnotas_etapa2',        [ReciboController::class, 'semnotas_etapa2']);
 Route::get('/inscricao/desclassificados',        [ReciboController::class, 'desclassificados']);
 Route::get('/inscricao/classificados',        [ReciboController::class, 'classificados']);
+Route::get('/inscricao/naoavaliados',        [ReciboController::class, 'naoavaliados']);
 
 Route::get('/inscricao/dre/dre',    [ReciboController::class, 'drealtafloresta']);
 Route::get('/inscricao/dre/drealtafloresta',    [ReciboController::class, 'drealtafloresta']);

@@ -3,6 +3,42 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.css') }}">
 
+    <style>
+        .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.popup img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+        </style>
 {{-- 
     <style>
         .iframe-container {
@@ -20,6 +56,15 @@
     <section class="app-main">
         <div class="app-main-left cards-area">
 
+
+            {{-- <div class="overlay" id="overlay">
+                <div class="popup" id="popup">
+                    <img src="https://via.placeholder.com/300" alt="Imagem do Pop-up">
+                    <span class="close-btn" id="close-btn">&times;</span>
+                </div>
+            </div> --}}
+ 
+ 
             {{-- <div class="container">
   <div class="row">
     <h4> Finalistas: </h4>
@@ -535,4 +580,35 @@
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('overlay');
+    const popup = document.getElementById('popup');
+    const closeBtn = document.getElementById('close-btn');
+
+    function openPopup() {
+        overlay.style.display = 'flex';
+    }
+
+    function closePopup() {
+        overlay.style.display = 'none';
+    }
+
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+            closePopup();
+        }
+    });
+
+    closeBtn.addEventListener('click', function() {
+        closePopup();
+    });
+
+    // Abre o popup quando a página é carregada
+    openPopup();
+});
+
+        </script>
 @endsection

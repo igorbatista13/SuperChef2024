@@ -100,6 +100,22 @@ class ReciboController extends Controller
             return view('errors.403');
         }
     }
+    public function naoavaliados()
+    {
+        $dre = Dre::all();
+        $titulo ='Não Avaliados';
+
+        if (Auth::check() && Auth::user()->hasRole('seduc')) {
+            // Se o usuário possui o perfil, realizar a consulta
+            $recibo = Recibo::where('disp_site', '=', Null )
+                ->orderBy('created_at', 'desc')->get();
+
+                return view('inscricao.index', ['recibo' => $recibo, 'dre' => $dre, 'titulo'=> $titulo]);
+            } else {
+
+            return view('errors.403');
+        }
+    }
     public function desclassificados()
     {
         $dre = Dre::all();

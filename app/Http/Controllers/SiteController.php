@@ -11,6 +11,7 @@ use App\Models\Cidade;
 use App\Models\Produto;
 use App\Models\Dre;
 use App\Models\Like;
+use App\Models\Popup;
 use Intervention\Image\ImageManager;
 
 use Illuminate\Support\Facades\Session;
@@ -99,6 +100,7 @@ class SiteController extends Controller
     public function index(Request $request)
     {
 
+        $popup = Popup::get();
         $recibos = Recibo::all();
 
         $id_recibo = Recibo::get('id');
@@ -120,6 +122,7 @@ class SiteController extends Controller
             'search' => $search,
             'id_recibo' => $id_recibo,
             'recibos' => $recibos,
+            'popup' => $popup,
 
         ]);
     }

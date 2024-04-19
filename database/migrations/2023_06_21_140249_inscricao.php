@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('inscricao', function (Blueprint $table) {
             $table->increments('id');
             $table->foreignId('dre_id')->constrained('dre')->onDelete('cascade');
-            // $table->foreignId('ingredientes_id')->constrained('ingredientes')->onDelete('cascade');
+            // USANDO EM SRVSQL FICA ASSIM:
+            //  $table->foreignId('escola_id')->constrained('escola')->ONUPDATE('cascade');
+
             $table->foreignId('escola_id')->constrained('escola')->onDelete('cascade');
             $table->string('Nome')->nullable();
             $table->string('Telefone')->nullable();
