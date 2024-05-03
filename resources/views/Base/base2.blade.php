@@ -875,8 +875,8 @@
                                 </g>
                             </svg>&nbsp; DOCUMENTOS </a>
 
-                        {{-- <div class="contact-actions socials">
-                            <a href="#" class="button pulse">
+                        <div class="contact-actions socials">
+                            <a href="{{ asset('/Site/formulario') }}" class="button pulse">
                                 <svg width="24px" height="24px" viewBox="0 0 52 52"
                                     xmlns="http://www.w3.org/2000/svg" fill="#f5f5f5" stroke="#f5f5f5">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"> </g>
@@ -897,7 +897,7 @@
                                     </g>
                                 </svg>&nbsp; Formulário de Inscrição
                             </a>
-                        </div> --}}
+                        </div> 
                     </div>
                 </div>
 

@@ -166,13 +166,13 @@
                                         <h3 class="font-weight-bolder">Digite o nome do ingrediente</h3>
                                         <div class="row">
                                             <div class="card-body">
-                                                <input type="hidden" id="alunoId" name="products[]" value="">
+                                                <input type="hidden" id="alunoId" name="products[]" value="" >
                                                 <input type="hidden" id="quantidade" name="quantities[]"
-                                                    value="">
+                                                    value="" required>
                                                 <input type="hidden" id="unidade" name="units[]" value="">
 
                                                 <input type="text" id="termoAluno" class="form-control"
-                                                    placeholder="Digite o nome">
+                                                    placeholder="Digite o nome" required    >
                                                 <div id="resultado"></div>
 
                                                 <div id="lista-produtos">
@@ -384,23 +384,27 @@
                                 });
 
                                 function adicionarProdutoLista(alunoId, nomeCompleto, quantidade, unidade, imagem) {
-                                    var itemHtml = '<tr class="produto-item">';
-                                    itemHtml +=
-                                        '<td style="border: 1px solid #ccc; padding: 10px;"><img class="border-radius-lg" width="50px" alt="Image placeholder" src="/images/ingredientes/' +
-                                        imagem + '"></td>';
-                                    itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b>' + nomeCompleto + ' </b></td>';
-                                    itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b> Quantidade: </b> ' +
-                                        quantidade +
-                                        '</td>';
-                                    itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b> Unidade de medida: </b> ' +
-                                        unidade + '</td>';
-                                    itemHtml +=
-                                        '<td style="border: 1px solid #ccc; padding: 10px;"><button class="btn btn-danger btn-remover" data-id="' +
-                                        alunoId + '">Remover</button></td>';
-                                    itemHtml += '</tr>';
+    if (quantidade > 0) {
+        var itemHtml = '<tr class="produto-item">';
+        itemHtml +=
+            '<td style="border: 1px solid #ccc; padding: 10px;"><img class="border-radius-lg" width="50px" alt="Image placeholder" src="/images/ingredientes/' +
+            imagem + '"></td>';
+        itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b>' + nomeCompleto + ' </b></td>';
+        itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b> Quantidade: </b> ' +
+            quantidade +
+            '</td>';
+        itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b> Unidade de medida: </b> ' +
+            unidade + '</td>';
+        itemHtml +=
+            '<td style="border: 1px solid #ccc; padding: 10px;"><button class="btn btn-danger btn-remover" data-id="' +
+            alunoId + '">Remover</button></td>';
+        itemHtml += '</tr>';
 
-                                    $('#lista-produtos').append(itemHtml);
-                                }
+        $('#lista-produtos').append(itemHtml);
+    } else {
+        alert("A quantidade deve ser maior que 0.");
+    }
+}
 
                                 // Evento para adicionar produtos ao clicar no botão "Adicionar"
                                 $(document).on('click', '.adicionar-aluno', function() {
