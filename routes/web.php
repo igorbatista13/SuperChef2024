@@ -169,5 +169,23 @@ Route::get('/Site/dre/dretangaradaserra',    [SiteController::class, 'dretangara
 // Buscar Produtos
 Route::get('/buscar-produtos', [SiteController::class, 'buscarProdutos'])->name('buscarProdutos');
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReciboCriado;
+
+Route::get('/testar-email', function () {
+    $recibo = null; // Aqui você pode passar um objeto recibo se desejar
+    $dadosFormulario = [
+        'campo1' => 'valor1',
+        'campo2' => 'valor2',
+        // Adicione outros campos do formulário aqui, se necessário
+    ];
+
+    try {
+        Mail::to('igorarrudabatista@gmail.com')->send(new ReciboCriado($recibo, $dadosFormulario));
+        return 'E-mail de teste enviado com sucesso!';
+    } catch (\Exception $e) {
+        return 'Erro ao enviar o e-mail de teste: ' . $e->getMessage();
+    }
+});
 
 require __DIR__ . '/auth.php';

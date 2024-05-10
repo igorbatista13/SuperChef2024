@@ -14,6 +14,10 @@ use App\Models\Like;
 use App\Models\Popup;
 use Intervention\Image\ImageManager;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReciboCriado; // Importe a classe do e-mail que você criará
+
+
 use Illuminate\Support\Facades\Session;
 
 
@@ -202,13 +206,22 @@ class SiteController extends Controller
                 }
             }
         }
-
-        // Salvar o recibo após anexar os produtos
         $recibo->save();
 
-        return back()->with('success', ' A sua inscrição foi realizada com sucesso!!');
-    }
 
+        try {
+            Mail::to($request->Email)->send(new ReciboCriado($recibo, $request->all()));
+            // Se o e-mail for enviado com sucesso, redirecione de volta com uma mensagem de sucesso
+            return back()->with('success', 'A sua inscrição foi realizada com sucesso! Um e-mail de confirmação foi enviado para você! ' . $request->email);
+        } catch (\Exception $e) {
+            // Se ocorrer um erro ao enviar o e-mail, redirecione de volta com uma mensagem de erro
+            return back()->with('error', 'Ocorreu um erro ao enviar o e-mail de confirmação. Por favor, tente novamente.');
+        }
+
+        
+        
+      //  return back()->with('success', ' A sua inscrição foi realizada com sucesso!!');
+    }
 
     public function store(Request $request, $reciboId)
     {

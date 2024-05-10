@@ -71,7 +71,7 @@
         <section class="showcase-area" id="showcase">
             <div class="showcase-container">
 
-               
+
             </div>
         </section>
         <div class="login-container">
@@ -166,13 +166,13 @@
                                         <h3 class="font-weight-bolder">Digite o nome do ingrediente</h3>
                                         <div class="row">
                                             <div class="card-body">
-                                                <input type="hidden" id="alunoId" name="products[]" value="" >
-                                                <input type="hidden" id="quantidade" name="quantities[]"
-                                                    value="" required>
+                                                <input type="hidden" id="alunoId" name="products[]" value="">
+                                                <input type="hidden" id="quantidade" name="quantities[]" value=""
+                                                    required>
                                                 <input type="hidden" id="unidade" name="units[]" value="">
 
                                                 <input type="text" id="termoAluno" class="form-control"
-                                                    placeholder="Digite o nome" required    >
+                                                    placeholder="Digite o nome" required>
                                                 <div id="resultado"></div>
 
                                                 <div id="lista-produtos">
@@ -237,14 +237,11 @@
                 <center>
                     <div class="checkbox-group">
                         <div>
-                            <input
-                              class="form"
-                              type="checkbox"
-                              id=""
-                              name="Autorizacao"
-                              value="1" required />
-                            <label for="subscribeNews"> <strong> Autorizo o uso dos meus dados para a efetuar a inscrição </strong> </label>
-                          </div>
+                            <input class="form" type="checkbox" id="" name="Autorizacao" value="1"
+                                required />
+                            <label for="subscribeNews"> <strong> Autorizo o uso dos meus dados para a efetuar a
+                                    inscrição </strong> </label>
+                        </div>
                         <div class="form-group col-md-12">
                             <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
                         </div>
@@ -384,27 +381,28 @@
                                 });
 
                                 function adicionarProdutoLista(alunoId, nomeCompleto, quantidade, unidade, imagem) {
-    if (quantidade > 0) {
-        var itemHtml = '<tr class="produto-item">';
-        itemHtml +=
-            '<td style="border: 1px solid #ccc; padding: 10px;"><img class="border-radius-lg" width="50px" alt="Image placeholder" src="/images/ingredientes/' +
-            imagem + '"></td>';
-        itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b>' + nomeCompleto + ' </b></td>';
-        itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b> Quantidade: </b> ' +
-            quantidade +
-            '</td>';
-        itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b> Unidade de medida: </b> ' +
-            unidade + '</td>';
-        itemHtml +=
-            '<td style="border: 1px solid #ccc; padding: 10px;"><button class="btn btn-danger btn-remover" data-id="' +
-            alunoId + '">Remover</button></td>';
-        itemHtml += '</tr>';
+                                    if (quantidade > 0) {
+                                        var itemHtml = '<tr class="produto-item">';
+                                        itemHtml +=
+                                            '<td style="border: 1px solid #ccc; padding: 10px;"><img class="border-radius-lg" width="50px" alt="Image placeholder" src="/images/ingredientes/' +
+                                            imagem + '"></td>';
+                                        itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b>' + nomeCompleto +
+                                            ' </b></td>';
+                                        itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b> Quantidade: </b> ' +
+                                            quantidade +
+                                            '</td>';
+                                        itemHtml += '<td style="border: 1px solid #ccc; padding: 10px;"><b> Unidade de medida: </b> ' +
+                                            unidade + '</td>';
+                                        itemHtml +=
+                                            '<td style="border: 1px solid #ccc; padding: 10px;"><button class="btn btn-danger btn-remover" data-id="' +
+                                            alunoId + '">Remover</button></td>';
+                                        itemHtml += '</tr>';
 
-        $('#lista-produtos').append(itemHtml);
-    } else {
-        alert("A quantidade deve ser maior que 0.");
-    }
-}
+                                        $('#lista-produtos').append(itemHtml);
+                                    } else {
+                                        alert("A quantidade deve ser maior que 0.");
+                                    }
+                                }
 
                                 // Evento para adicionar produtos ao clicar no botão "Adicionar"
                                 $(document).on('click', '.adicionar-aluno', function() {
@@ -589,35 +587,35 @@
                             });
                         </script>
 
-                        
-<script>
-    function validarCPF(cpf) {
-        cpf = cpf.replace(/[^\d]+/g, '');
-        if (cpf == '' || cpf.length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
-        var soma = 0;
-        for (var i = 0; i < 9; i++) soma += parseInt(cpf.charAt(i)) * (10 - i);
-        var resto = 11 - (soma % 11);
-        if (resto == 10 || resto == 11) resto = 0;
-        if (resto != parseInt(cpf.charAt(9))) return false;
-        soma = 0;
-        for (var i = 0; i < 10; i++) soma += parseInt(cpf.charAt(i)) * (11 - i);
-        resto = 11 - (soma % 11);
-        if (resto == 10 || resto == 11) resto = 0;
-        if (resto != parseInt(cpf.charAt(10))) return false;
-        return true;
-    }
 
-    $(document).ready(function() {
-        $('#cpf').on('blur', function() {
-            var cpf = $(this).val();
-            if (!validarCPF(cpf)) {
-                alert('Favor corrigir o seu CPF.');
-                $(this).val('');
-                $(this).focus();
-            }
-        });
-    });
-</script>
+                        <script>
+                            function validarCPF(cpf) {
+                                cpf = cpf.replace(/[^\d]+/g, '');
+                                if (cpf == '' || cpf.length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+                                var soma = 0;
+                                for (var i = 0; i < 9; i++) soma += parseInt(cpf.charAt(i)) * (10 - i);
+                                var resto = 11 - (soma % 11);
+                                if (resto == 10 || resto == 11) resto = 0;
+                                if (resto != parseInt(cpf.charAt(9))) return false;
+                                soma = 0;
+                                for (var i = 0; i < 10; i++) soma += parseInt(cpf.charAt(i)) * (11 - i);
+                                resto = 11 - (soma % 11);
+                                if (resto == 10 || resto == 11) resto = 0;
+                                if (resto != parseInt(cpf.charAt(10))) return false;
+                                return true;
+                            }
+
+                            $(document).ready(function() {
+                                $('#cpf').on('blur', function() {
+                                    var cpf = $(this).val();
+                                    if (!validarCPF(cpf)) {
+                                        alert('Favor corrigir o seu CPF.');
+                                        $(this).val('');
+                                        $(this).focus();
+                                    }
+                                });
+                            });
+                        </script>
 
 </body>
 
