@@ -45,18 +45,30 @@ class ReciboController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $dre = Dre::all();
         $titulo = 'TODAS INSCRIÇÕES';
 
         if (Auth::check() && Auth::user()->hasRole('seduc')) {
-            // Se o usuário possui o perfil, realizar a consulta
-            $recibo = Recibo::orderBy('cpf')->orderBy('created_at', 'desc')->get();
+            // Paginando com 10 registros por vez
+            $query = Recibo::orderBy('cpf')->orderBy('created_at', 'desc');
 
-            return view('inscricao.index', ['recibo' => $recibo, 'dre' => $dre, 'titulo'=> $titulo]);
+            // Aplicando busca
+            if ($request->filled('search')) {
+                $search = $request->input('search');
+                $query->where(function($q) use ($search) {
+                    $q->where('cpf', 'like', "%$search%")
+                    ->orWhere('nome', 'like', "%$search%")
+                    ->orWhere('id', 'like', "%$search%");
+                });
+            }
+
+            // Paginação
+            $recibo = $query->paginate(10)->appends($request->except('page'));
+
+            return view('inscricao.index', ['recibo' => $recibo, 'dre' => $dre, 'titulo' => $titulo]);
         } else {
-
             return view('errors.403');
         }
     }
@@ -203,7 +215,7 @@ class ReciboController extends Controller
     public function dreconfresa()
     {
         $dre = Dre::all();
-        $nomeDRE = 'CÁCERES';
+        $nomeDRE = 'CONFRESA';
 
         if (Auth::check() && Auth::user()->hasRole('seduc')) {
             // Se o usuário possui o perfil, realizar a consulta

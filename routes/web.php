@@ -164,7 +164,8 @@ Route::get('/Site/dre/drerondonopolis',    [SiteController::class, 'drerondonopo
 Route::get('/Site/dre/dresinop',    [SiteController::class, 'dresinop']);
 Route::get('/Site/dre/dretangaradaserra',    [SiteController::class, 'dretangaradaserra']);
 
-
+Route::get('inscricoes', [ReciboController::class, 'index'])->name('inscricoes.index');
+Route::get('inscricoes/data', [ReciboController::class, 'getData'])->name('inscricoes.data');
 
 // Buscar Produtos
 Route::get('/buscar-produtos', [SiteController::class, 'buscarProdutos'])->name('buscarProdutos');

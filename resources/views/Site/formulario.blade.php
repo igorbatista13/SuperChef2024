@@ -4,6 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>SEDUC MT - Formulário - MasterChef </title>
+
+            <!-- Inclua o CSS do Select2 -->
+            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+    
+            <!-- Inclua o jQuery (necessário para o Select2) -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
+            <!-- Inclua o JS do Select2 -->
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/0.6.0/modern-normalize.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css'>
     <link rel="stylesheet" href="{{ asset('/css/upload_image/style.css') }}">
@@ -29,7 +38,10 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
-</head>
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.css">
+
+    
 </head>
 
 <style>
@@ -134,8 +146,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <select name="escola_id" id="escola_id" class="input-field b-cat b-cat-img"
-                                        required>
+                                    <select name="escola_id" id="escola_id" class="input-field b-cat b-cat-img" required>
                                         <option value="" enable> Selecione a sua Escola</option>
                                         @foreach ($escola as $escolas)
                                             <option value="{{ $escolas->id }}">{{ $escolas->EscolaNome }} </option>
@@ -143,7 +154,8 @@
                                     </select>
 
                                 </div>
-                    </div>
+
+    </div>
                 </div>
 
                 <div class="alert alert-warning" role="alert">
@@ -616,6 +628,89 @@
                                 });
                             });
                         </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+
+<script>
+    Vue.component('search-select', {
+  props: ['options', 'filterMethod'],
+  data() {
+    return {
+      query: ''
+    };
+  },
+  computed: {
+    results() {
+      return this.filterMethod(this.options, this.query);
+    }
+  },
+  methods: {
+    setQuery(event) {
+      this.query = event.target.value;
+    }
+  },
+  render() {
+    return this.$scopedSlots.default({
+      results: this.results,
+      searchList: event => {
+        this.setQuery(event);
+      }
+    });
+  }
+});
+
+Vue.component('autocomplete', {
+  props: ['options'],
+  data() {
+    return {
+      dropdownVisible: false
+    };
+  },
+  methods: {
+    filterMethod(options, query) {
+      return options.filter(option => option.EscolaNome.toLowerCase().includes(query.toLowerCase()));
+    },
+    showDropdown() {
+      this.dropdownVisible = true;
+    },
+    hideDropdown() {
+      this.dropdownVisible = false;
+    }
+  },
+  template: `
+    <search-select
+      :options="options"
+      :filterMethod="filterMethod"
+    >
+      <div slot-scope="{ results, searchList }">
+        <div class="autocomplete">
+          <input
+            type="text"
+            placeholder="Type to search list"
+            @input="searchList"
+            @focus="showDropdown"
+            @blur="hideDropdown"
+          />
+          <div class="autocomplete-dropdown" v-if="dropdownVisible">
+            <ul class="autocomplete-search-results-list">
+              <li 
+                class="autocomplete-search-result"
+                v-for="result in results"
+                :key="result.id"
+              >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </search-select>
+  `
+});
+
+const app = new Vue({
+  el: '#app'
+});
+
+    </script>
 
 </body>
 

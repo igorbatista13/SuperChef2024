@@ -5,41 +5,41 @@
 
     <style>
         .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
 
-.popup {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    position: relative;
-}
+        .popup {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
 
-.popup img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-}
+        .popup img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
 
-.close-btn {
-    position: absolute;
-    top: 0px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 20px;
-}
-        </style>
-{{-- 
+        .close-btn {
+            position: absolute;
+            top: 0px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+    {{-- 
     <style>
         .iframe-container {
             display: flex !important;
@@ -63,8 +63,8 @@
                     <span class="close-btn" id="close-btn">&times;</span>
                 </div>
             </div> --}}
- 
- 
+
+
             {{-- <div class="container">
   <div class="row">
     <h4> Finalistas: </h4>
@@ -140,21 +140,21 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="likeModalLabel">Votar nesta receita</h5>
-                                          
+
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-md-6">
 
                                                     <h6 class="card-title">
-                                                       <b> Nome do Prato: </b> {{ $recibos->Nome_Prato }}
+                                                        <b> Nome do Prato: </b> {{ $recibos->Nome_Prato }}
                                                     </h6>
-                                                   <b> Localidade: </b> {{ $recibos->dre->Nome }}
+                                                    <b> Localidade: </b> {{ $recibos->dre->Nome }}
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="card">
-                                                    <img src="{{ asset('/images/inscricao/' . $recibos->image) ?? 'Sem registros' }}"
-                                                        width="70%" class="logo cardImage-js">
+                                                        <img src="{{ asset('/images/inscricao/' . $recibos->image) ?? 'Sem registros' }}"
+                                                            width="70%" class="logo cardImage-js">
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,7 +163,7 @@
                                             <div class="form-group">
                                                 <label for="nome"> <b> Nome completo: </b> </label>
                                                 <input type="text" class="form-control" id="nome" name="nome"
-                                                    required>
+                                                  minlength="7"  required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="cpf"> <b> CPF: </b></label>
@@ -173,14 +173,11 @@
                                             <div class="like-content">
 
                                                 <div>
-                                                    <input
-                                                      class="form"
-                                                      type="checkbox"
-                                                      id=""
-                                                      name="Autorizacao_cpf"
-                                                      value="1" required />
-                                                    <label for="subscribeNews"> <strong> Autorizo o uso do meu CPF para a contabilização deste voto.</strong> </label>
-                                                  </div>
+                                                    <input class="form" type="checkbox" id=""
+                                                        name="Autorizacao_cpf" value="1" required />
+                                                    <label for="subscribeNews"> <strong> Autorizo o uso do meu CPF para a
+                                                            contabilização deste voto.</strong> </label>
+                                                </div>
 
                                                 <button type="submit" class="btn-like like-review">Votar</button>
                                             </div>
@@ -188,7 +185,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                             @if (session('error'))
                                 <h6>
@@ -530,46 +526,7 @@
 
 
 
-    <script>
-        function validarCPF(cpf) {
-            cpf = cpf.replace(/[^\d]+/g, '');
-            if (cpf == '' || cpf.length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
-            var soma = 0;
-            for (var i = 0; i < 9; i++) soma += parseInt(cpf.charAt(i)) * (10 - i);
-            var resto = 11 - (soma % 11);
-            if (resto == 10 || resto == 11) resto = 0;
-            if (resto != parseInt(cpf.charAt(9))) return false;
-            soma = 0;
-            for (var i = 0; i < 10; i++) soma += parseInt(cpf.charAt(i)) * (11 - i);
-            resto = 11 - (soma % 11);
-            if (resto == 10 || resto == 11) resto = 0;
-            if (resto != parseInt(cpf.charAt(10))) return false;
-            return true;
-        }
 
-        $(document).ready(function() {
-        $('#cpf').on('blur', function() {
-            // Evento blur para validar CPF
-            var cpf = $(this).val();
-            if (!validarCPF(cpf)) {
-                alert('Favor corrigir o seu CPF.');
-                $(this).val('');
-                $(this).focus();
-            }
-        });
-
-        $('#form-votacao').on('submit', function() {
-            // Evento submit para validar CPF antes de enviar o formulário
-            var cpf = $('#cpf').val();
-            if (!validarCPF(cpf)) {
-                alert('Favor corrigir o seu CPF.');
-                $('#cpf').val('');
-                $('#cpf').focus();
-                return false; // Impede o envio do formulário
-            }
-        });
-    });
-    </script>
 
 
 
@@ -584,31 +541,30 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    const overlay = document.getElementById('overlay');
-    const popup = document.getElementById('popup');
-    const closeBtn = document.getElementById('close-btn');
+            const overlay = document.getElementById('overlay');
+            const popup = document.getElementById('popup');
+            const closeBtn = document.getElementById('close-btn');
 
-    function openPopup() {
-        overlay.style.display = 'flex';
-    }
+            function openPopup() {
+                overlay.style.display = 'flex';
+            }
 
-    function closePopup() {
-        overlay.style.display = 'none';
-    }
+            function closePopup() {
+                overlay.style.display = 'none';
+            }
 
-    overlay.addEventListener('click', function(e) {
-        if (e.target === overlay) {
-            closePopup();
-        }
-    });
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closePopup();
+                }
+            });
 
-    closeBtn.addEventListener('click', function() {
-        closePopup();
-    });
+            closeBtn.addEventListener('click', function() {
+                closePopup();
+            });
 
-    // Abre o popup quando a página é carregada
-    openPopup();
-});
-
-        </script>
+            // Abre o popup quando a página é carregada
+            openPopup();
+        });
+    </script>
 @endsection

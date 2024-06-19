@@ -17,6 +17,7 @@ use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReciboCriado; // Importe a classe do e-mail que você criará
 
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Session;
 
@@ -51,91 +52,133 @@ class SiteController extends Controller
         return response()->json($alunos);
     }
 
-
+    public function validarCPF($cpf)
+    {
+        $cpf = preg_replace('/[^0-9]/', '', $cpf);
+    
+        if (strlen($cpf) != 11 || preg_match('/^(\d)\1{10}$/', $cpf)) {
+            return false;
+        }
+    
+        // Calcula os dígitos verificadores
+        for ($t = 9; $t < 11; $t++) {
+            for ($d = 0, $c = 0; $c < $t; $c++) {
+                $d += $cpf[$c] * (($t + 1) - $c);
+            }
+            $d = ((10 * $d) % 11) % 10;
+            if ($cpf[$c] != $d) {
+                return false;
+            }
+        }
+    
+        return true;
+    }
+    
     public function vote(Request $request, Recibo $recibo)
     {
-        // Define a data limite para votação (Verificar a data)
+        // Define a data limite para votação
         $limitDate = '2024-09-18 23:59:59';
-
+    
         // Obtém a data e hora atual
         $currentDateTime = now();
-
+    
         // Converte a data limite para um objeto DateTime
         $limitDateTime = new \DateTime($limitDate);
-
+    
         // Verifica se a data atual é menor ou igual à data limite
         if ($currentDateTime <= $limitDateTime) {
             // Ainda é permitido votar
-
+    
             $sessionId = Session::getId();
-
+    
+            $cpf = $request->cpf;
+    
+            // Verifica se o CPF é válido
+            if (!$this->validarCPF($cpf)) {
+                return redirect()->back()->with('error', 'CPF inválido. Favor corrigir o seu CPF.');
+            }
+    
             // Hash MD5 do CPF
-            $hashedCpf = md5($request->cpf);
-
+            $hashedCpf = ($cpf);
+    
             // Verifica se o CPF já foi utilizado para votar nesta receita
             $cpfExists = Like::where('recibo_id', $recibo->id)
                 ->where('cpf', $hashedCpf)
                 ->exists();
-
+    
             if ($cpfExists) {
                 return redirect()->back()->with('error', 'Este CPF já foi utilizado para votar nesta receita!');
             }
-
+    
             if ($recibo->hasLiked($sessionId)) {
                 return redirect()->back()->with('error', 'Você já votou nesta receita!');
             }
-
+    
             $recibo->likes()->create([
                 'sessao' => $sessionId,
                 'nome' => $request->nome,
                 'cpf' => $hashedCpf, // Salva o CPF criptografado com MD5
                 'Autorizacao_cpf' => $request->Autorizacao_cpf,
             ]);
-
+    
             return redirect()->back()->with('success', 'Voto registrado com sucesso.');
         } else {
             // Já passou da data limite, não é permitido votar
             return redirect()->back()->with('error', 'A votação foi encerrada. Obrigado!');
         }
     }
+    
 
 
 
     public function index(Request $request)
     {
-
         $popup = Popup::get();
         $recibos = Recibo::all();
-
-        $id_recibo = Recibo::get('id');
-
-
-
         $search = $request->input('search');
-
+    
         if ($search) {
-            $recibo = Recibo::where([['Nome_Prato', 'like', '%' . $search . '%']])->where('disp_site', '=', 0)->paginate('12');
+            $recibo = Recibo::where([['Nome_Prato', 'like', '%' . $search . '%']])
+                ->where('disp_site', '=', 0)
+                ->paginate('12');
         } else {
-            $recibo = Recibo::with('dre', 'likes')->where('disp_site', '=', 0)->paginate('12');
+            $recibo = Recibo::with('dre', 'likes')
+                ->where('disp_site', '=', 0)
+                ->paginate('12');
         }
-
-
-
+    
         return view('Site.index', [
             'recibo' => $recibo,
             'search' => $search,
-            'id_recibo' => $id_recibo,
+            'id_recibo' => Recibo::get('id'),
             'recibos' => $recibos,
             'popup' => $popup,
-
         ]);
     }
-
+    
     public function formulario()
     {
 
         $ingredientes = Produto::all();
-        $escola = escola::all();
+        // $escola = Escola::select('EscolaNome')
+        //     ->distinct()
+        //   //  ->groupBy('EscolaNome')
+        //     ->orderBy( 'EscolaNome', 'asc')
+        //     ->pluck('id', 'EscolaNome');
+        //     //->get();
+
+        $subquery = DB::table('escola')
+        ->select('EscolaNome', DB::raw('MIN(id) as id'))
+        ->groupBy('EscolaNome');
+    
+    $escola = DB::table(DB::raw("({$subquery->toSql()}) as sub"))
+        ->mergeBindings($subquery)
+        ->orderBy('EscolaNome', 'asc')
+        ->get();
+
+            
+//            $escola = Escola::orderBy('EscolaNome', 'asc')-&gt;distinct()-&gt;get(['EscolaNome'])-&gt;all();
+
         $dre = Dre::all();
         $cidade = Cidade::all();
         // $dre_cidade = Dre::with('escola')->get();
@@ -212,15 +255,15 @@ class SiteController extends Controller
         try {
             Mail::to($request->Email)->send(new ReciboCriado($recibo, $request->all()));
             // Se o e-mail for enviado com sucesso, redirecione de volta com uma mensagem de sucesso
-            return back()->with('success', 'A sua inscrição foi realizada com sucesso! Um e-mail de confirmação foi enviado para você! ' . $request->email);
+            return back()->with('success', 'A sua inscrição foi realizada com sucesso! Um e-mail de confirmação foi enviado para você! ' . $request->Email);
         } catch (\Exception $e) {
             // Se ocorrer um erro ao enviar o e-mail, redirecione de volta com uma mensagem de erro
             return back()->with('error', 'Ocorreu um erro ao enviar o e-mail de confirmação. Por favor, tente novamente.');
         }
 
-        
-        
-      //  return back()->with('success', ' A sua inscrição foi realizada com sucesso!!');
+
+
+        //  return back()->with('success', ' A sua inscrição foi realizada com sucesso!!');
     }
 
     public function store(Request $request, $reciboId)
@@ -590,25 +633,24 @@ class SiteController extends Controller
 
         $id_recibo = Recibo::get('id');
 
-        
-        
+
+
         $search = $request->input('search');
-        
-        if($search) {
-            $recibo = Recibo::where([['Nome_Prato', 'like', '%'.$search. '%' ]])->where('disp_site','=',0)->paginate('12');
-            
+
+        if ($search) {
+            $recibo = Recibo::where([['Nome_Prato', 'like', '%' . $search . '%']])->where('disp_site', '=', 0)->paginate('12');
         } else {
-            $recibo = Recibo::with('dre','likes')->where('disp_site','=',0)->where('dre_id', '=', 11)->paginate('12');  
+            $recibo = Recibo::with('dre', 'likes')->where('disp_site', '=', 0)->where('dre_id', '=', 11)->paginate('12');
         }
 
         return view('Site.index', [
-        'recibo'=> $recibo,
-        'search' => $search,
-        'id_recibo' => $id_recibo,
-        'recibos' => $recibos,
-        'nomeDRE' => $nomeDRE,
+            'recibo' => $recibo,
+            'search' => $search,
+            'id_recibo' => $id_recibo,
+            'recibos' => $recibos,
+            'nomeDRE' => $nomeDRE,
 
-    ]);
+        ]);
     }
     //12 - Rondonópolis
     public function drerondonopolis(Request $request)
@@ -618,22 +660,21 @@ class SiteController extends Controller
         $id_recibo = Recibo::get('id');
 
         $search = $request->input('search');
-        
-        if($search) {
-            $recibo = Recibo::where([['Nome_Prato', 'like', '%'.$search. '%' ]])->where('disp_site','=',0)->paginate('12');
-            
+
+        if ($search) {
+            $recibo = Recibo::where([['Nome_Prato', 'like', '%' . $search . '%']])->where('disp_site', '=', 0)->paginate('12');
         } else {
-            $recibo = Recibo::with('dre','likes')->where('disp_site','=',0)->where('dre_id', '=', 12)->paginate('12');  
+            $recibo = Recibo::with('dre', 'likes')->where('disp_site', '=', 0)->where('dre_id', '=', 12)->paginate('12');
         }
 
         return view('Site.index', [
-        'recibo'=> $recibo,
-        'search' => $search,
-        'id_recibo' => $id_recibo,
-        'recibos' => $recibos,
-        'nomeDRE' => $nomeDRE,
+            'recibo' => $recibo,
+            'search' => $search,
+            'id_recibo' => $id_recibo,
+            'recibos' => $recibos,
+            'nomeDRE' => $nomeDRE,
 
-    ]);
+        ]);
     }
     //13 - Sinop
     public function dresinop(Request $request)
@@ -641,24 +682,23 @@ class SiteController extends Controller
         $nomeDRE = 'SINOP';
         $recibos = Recibo::get();
 
-        $id_recibo = Recibo::get('id'); 
+        $id_recibo = Recibo::get('id');
         $search = $request->input('search');
-        
-        if($search) {
-            $recibo = Recibo::where([['Nome_Prato', 'like', '%'.$search. '%' ]])->where('disp_site','=',0)->paginate('12');
-            
+
+        if ($search) {
+            $recibo = Recibo::where([['Nome_Prato', 'like', '%' . $search . '%']])->where('disp_site', '=', 0)->paginate('12');
         } else {
-            $recibo = Recibo::with('dre','likes')->where('disp_site','=',0)->where('dre_id', '=', 13)->paginate('12');  
+            $recibo = Recibo::with('dre', 'likes')->where('disp_site', '=', 0)->where('dre_id', '=', 13)->paginate('12');
         }
 
         return view('Site.index', [
-        'recibo'=> $recibo,
-        'search' => $search,
-        'id_recibo' => $id_recibo,
-        'recibos' => $recibos,
-        'nomeDRE' => $nomeDRE,
+            'recibo' => $recibo,
+            'search' => $search,
+            'id_recibo' => $id_recibo,
+            'recibos' => $recibos,
+            'nomeDRE' => $nomeDRE,
 
-    ]);
+        ]);
     }
     //14 - Sinop
     public function dretangaradaserra(Request $request)
@@ -666,24 +706,23 @@ class SiteController extends Controller
         $nomeDRE = 'TANGARÁ DA SERRA';
         $recibos = Recibo::get();
 
-        $id_recibo = Recibo::get('id');       
-        
+        $id_recibo = Recibo::get('id');
+
         $search = $request->input('search');
-        
-        if($search) {
-            $recibo = Recibo::where([['Nome_Prato', 'like', '%'.$search. '%' ]])->where('disp_site','=',0)->paginate('12');
-            
+
+        if ($search) {
+            $recibo = Recibo::where([['Nome_Prato', 'like', '%' . $search . '%']])->where('disp_site', '=', 0)->paginate('12');
         } else {
-            $recibo = Recibo::with('dre','likes')->where('disp_site','=',0)->where('dre_id', '=', 14)->paginate('12');  
+            $recibo = Recibo::with('dre', 'likes')->where('disp_site', '=', 0)->where('dre_id', '=', 14)->paginate('12');
         }
 
         return view('Site.index', [
-        'recibo'=> $recibo,
-        'search' => $search,
-        'id_recibo' => $id_recibo,
-        'recibos' => $recibos,
-        'nomeDRE' => $nomeDRE,
+            'recibo' => $recibo,
+            'search' => $search,
+            'id_recibo' => $id_recibo,
+            'recibos' => $recibos,
+            'nomeDRE' => $nomeDRE,
 
-    ]);
+        ]);
     }
 }

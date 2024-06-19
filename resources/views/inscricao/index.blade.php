@@ -1,8 +1,6 @@
 @extends('base.novabase')
 @section('content')
 
-<link
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
 
 
 <main id="main" class="main">
@@ -25,7 +23,16 @@
             <h5 class="card-title"></h5>
 
             <!-- Table with stripped rows -->
-            <table class="table datatable">
+            <form method="GET" action="{{ route('inscricoes.index') }}" class="my-2 my-lg-0">
+              <div class="row g-3">
+              <div class="col-sm-4">
+                <input class="form-control mr-sm-2" type="search" name="search" placeholder="Procurar" aria-label="Search" value="{{ request()->input('search') }}">
+              </div>
+                <div class="col-sm-4">
+                <button class="btn btn-primary my-2 my-sm-0" type="submit">Procurar</button>
+              </div>
+          </form>
+            <table class="table table-bordered mt-3">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -74,13 +81,14 @@
         
 <?php $totalnotasseduc = $recibos->nota_seduc1 + $recibos->nota_seduc2 + $recibos->nota_seduc3 + $recibos->nota_seduc4 + $recibos->nota_seduc5; ?>
 <?php $totalnotasseduc2 = $recibos->nota_drenutricao1 + $recibos->nota_drenutricao2 + $recibos->nota_drenutricao3 + $recibos->nota_drenutricao4 + $recibos->nota_drenutricao5; ?>
+<?php $totalnotasseduc3 = $recibos->nota_dre1 + $recibos->nota_dre2 + $recibos->nota_dre3 + $recibos->nota_dre4 + $recibos->nota_dre5; ?>
 {{-- TOTAL --}}
 
-   <?php $total = $totalnotasseduc + $totalnotasseduc2 ?> 
+   <?php $total = $totalnotasseduc + $totalnotasseduc2 + $totalnotasseduc3 ?> 
 
-@if ($total  >= 10)
+@if ($total  >= 15)
 <td>  <center> <h2><span class="badge bg-success">  {{$total ?? 'Nota não informada'}}</span></h2></td>
-  @elseif ( $total  < 10)
+  @elseif ( $total  < 15)
   <td>  <center> <h2><span class="badge bg-danger">  {{$total ?? 'Nota não informada'}}</span></h2></td>
   @endif
 <td>
@@ -140,11 +148,18 @@
 
 </tr>
 
-@endforeach
 </tbody>
+@endforeach
 </table>
-            <!-- End Table with stripped rows -->
-  </section>
+</section>
+
+
+
+
+<div class="d-flex justify-content-center">
+  {{ $recibo->links() }}
+</div>
 </main>
+            <!-- End Table with stripped rows -->
 
 @endsection

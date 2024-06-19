@@ -80,9 +80,12 @@
                 
                 <tr>
                   <th scope="row"><a href="{{ route('inscricao.edit',$recibos->id) }}"> {{$recibos->id }}
-                    
-                      <img src="{{ asset('/images/ingredientes/') }}/{{ $recibos->image }}"
-                          width="60px">
+
+             @if ($recibos->image == '')
+             <img src="https://assets.infra.grancursosonline.com.br/projeto/seduc-mt-secretaria-de-estado-de-educacao-esporte-e-lazer-do-estado-de-mato-grosso.png" width="60px">
+             @else
+                          <img src="{{ asset('/images/inscricao/' . $recibos->image) ?? 'Sem registros' }}"
+                    @endif
                                </a></th>
                 <td><b> {{$recibos->Nome ?? 'Não informado'}} </b></td>
                   <td><b>  {{$recibos->cpf ?? 'Não informado'}} </b> </td>
@@ -94,15 +97,12 @@
                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16"> <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/> </svg>
                  Avaliar</a> </td>
         
-{{-- Etapa1 --}}
-<?php $totalnotasseduc = $recibos->nota_seduc1 + $recibos->nota_seduc2 + $recibos->nota_seduc3 + $recibos->nota_seduc4 + $recibos->nota_seduc5; ?>
-{{-- ETAPA 2 --}}
-<?php $totalnotasseduc2 = $recibos->nota_drenutricao1 + $recibos->nota_drenutricao2 + $recibos->nota_drenutricao3 + $recibos->nota_drenutricao4 + $recibos->nota_drenutricao5; ?>
-{{-- ETAPA 3 --}}
-<?php $totalnotasdre = $recibos->nota_dre1 + $recibos->nota_dre2 + $recibos->nota_dre3 + $recibos->nota_dre4 + $recibos->nota_dre5; ?>
-{{-- TOTAL --}}
-{{-- <?php $total = $totalnotasseduc2 + $totalnotasdre ?> --}}
- <?php $total = $totalnotasseduc ?> 
+                 <?php $totalnotasseduc = $recibos->nota_seduc1 + $recibos->nota_seduc2 + $recibos->nota_seduc3 + $recibos->nota_seduc4 + $recibos->nota_seduc5; ?>
+                 <?php $totalnotasseduc2 = $recibos->nota_drenutricao1 + $recibos->nota_drenutricao2 + $recibos->nota_drenutricao3 + $recibos->nota_drenutricao4 + $recibos->nota_drenutricao5; ?>
+                 <?php $totalnotasseduc3 = $recibos->nota_dre1 + $recibos->nota_dre2 + $recibos->nota_dre3 + $recibos->nota_dre4 + $recibos->nota_dre5; ?>
+                 {{-- TOTAL --}}
+                 
+                    <?php $total = $totalnotasseduc + $totalnotasseduc2 + $totalnotasseduc3 ?> 
 
 @if ($totalnotasseduc  >= 10)
 <td>  <center> <h2><span class="badge bg-success">  {{$total ?? 'Nota não informada'}}</span></h2></td>

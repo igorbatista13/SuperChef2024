@@ -278,7 +278,7 @@
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                 <i class="text-danger bi bi-file-text">
                                                    Pontuação máxima:
-                                                    2
+                                                    5
                                                     Pontos
                                                 </i>
                                             </div>
@@ -288,7 +288,7 @@
                                                     {!! Form::number('nota_drenutricao2', null, [
                                                         'placeholder' => 'Insira a nota',
                                                         'class' => 'form-control',
-                                                        'max="2"',
+                                                        'max="5"',
                                                     ]) !!}
 
                                                 </span>
